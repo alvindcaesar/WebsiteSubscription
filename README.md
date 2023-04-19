@@ -22,7 +22,7 @@ Run the database seeder to populate the Website and Users(Subscribers) data:
 The platform provides the following endpoints:
 
 ### Create a post
-Endpoint: `POST /websites/{website_id}/posts`
+Endpoint: `POST /api/websites/{website_id}/posts`
 
 Request:
 ```json
@@ -49,7 +49,7 @@ Response:
 ```
 
 ### Subscribe to a website
-Endpoint: `POST /websites/{website_id}/subscriptions`
+Endpoint: `POST /api/websites/{website_id}/subscriptions`
 
 Request:
 ```json
