@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\Website;
 use App\Models\Subscription;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class SubscriptionController extends Controller
 {
@@ -39,10 +42,28 @@ class SubscriptionController extends Controller
             'user_id' => 'required|integer',
         ]);
 
-        $subscription = new Subscription;
-        $subscription->user_id = $validatedData['user_id'];
-        $subscription->website_id = $website_id;
-        $subscription->save();
+        $user = User::find($validatedData['user_id']);
+        if (!$user) {
+            return response()->json(['error' => 'User not found.'], 404);
+        }
+
+        $website = Website::find($website_id);
+        if (!$website) {
+            return response()->json(['error' => 'Website not found.'], 404);
+        }
+
+        $subscription = Subscription::where('user_id', $validatedData['user_id'])
+            ->where('website_id', $website_id)
+            ->first();
+
+        if ($subscription) {
+            return response()->json(['error' => 'Subscription already exists.'], 400);
+        }
+
+        $subscription = Subscription::create([
+            'user_id' => $validatedData['user_id'],
+            'website_id' => $website_id,
+        ]);
 
         return response()->json([
             'success' => true,
