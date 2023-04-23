@@ -20,5 +20,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/websites/{website}/posts', [PostController::class, 'store']);
-Route::post('/websites/{website}/subscriptions', [SubscriptionController::class, 'store']);
+Route::post('/websites/{website}/posts/create', [PostController::class, 'store']);
+Route::post('/websites/{website}/subscriptions/create', [SubscriptionController::class, 'store']);
